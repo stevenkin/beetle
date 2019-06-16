@@ -1,2 +1,2 @@
 # beetle
-a lightweight, simple web spider framework
+:beetle: a lightweight, simple web spider framework
