@@ -1,4 +1,4 @@
 package me.stevenkin.beetle;
 
-public class Beetle {
+public class BeetleEngine {
 }

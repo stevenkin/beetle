@@ -1,11 +1,11 @@
 package me.stevenkin.beetle.pipeline;
 
-import me.stevenkin.beetle.bean.Result;
+import me.stevenkin.beetle.request.Request;
 
-/**
- * Created by Administrator on 2016/8/27.
- */
-public interface PipeLine {
-    public boolean checkProcess(Result result);
-    public void processResult(Result result);
+@FunctionalInterface
+public interface PipeLine<T> {
+
+    void process(T item, Request request);
+
+
 }
