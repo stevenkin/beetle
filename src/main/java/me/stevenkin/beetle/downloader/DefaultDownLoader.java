@@ -14,48 +14,38 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class DefaultDownLoader implements DownLoader {
 
+    private OkHttpClient client;
+
     private Config config;
+
+    private DefaultCookiePool cookiePool;
 
     public DefaultDownLoader(Config config) {
         this.config = config;
-    }
-
-    @Override
-    public Response download(Request request) {
-        OkHttpClient client = new OkHttpClient.Builder()
+        this.cookiePool = new DefaultCookiePool();
+        this.client = new OkHttpClient.Builder()
                 .connectTimeout(config.getTimeout(), TimeUnit.SECONDS)
                 .readTimeout(config.getReadTimeout(), TimeUnit.SECONDS)
                 .cookieJar(new CookieJar() {
                     @Override
                     public void saveFromResponse(HttpUrl httpUrl, List<Cookie> list) {
-                        list.forEach(cookie -> log.info("cookie is {}", cookie));
+                        list.forEach(cookie -> log.info("get cookie is {}", cookie));
+                        cookiePool.saveCookies(list);
                     }
 
                     @Override
                     public List<Cookie> loadForRequest(HttpUrl httpUrl) {
-                        return request.cookies().stream()
-                                .map(cookie -> {
-                                            Cookie.Builder builder = new Cookie.Builder()
-                                                    .domain(cookie.getDomain())
-                                                    .expiresAt(cookie.getMaxAge())
-                                                    .name(cookie.getName())
-                                                    .value(cookie.getValue())
-                                                    .path(cookie.getPath());
-                                            if(cookie.isHttpOnly())
-                                                builder.httpOnly();
-                                            if(cookie.isSecure()){
-                                                builder.secure();
-                                            }
-                                            return builder.build();
-                                        })
-                                .collect(Collectors.toList());
+                        return cookiePool.loadCookies(httpUrl.host());
                     }
                 }).build();
+    }
+
+    @Override
+    public Response download(Request request) {
         String method = request.method();
         String url = request.url();
         Multimap<String, String> params = request.params();

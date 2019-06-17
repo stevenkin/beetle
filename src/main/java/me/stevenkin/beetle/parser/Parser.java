@@ -3,10 +3,10 @@ package me.stevenkin.beetle.parser;
 import me.stevenkin.beetle.request.Request;
 import me.stevenkin.beetle.response.Response;
 
-public interface Parser<T> {
+public interface Parser {
 
     boolean supports(Request request);
 
-    Result<T> parse(Response response);
+    Result parse(Response response);
 
 }
