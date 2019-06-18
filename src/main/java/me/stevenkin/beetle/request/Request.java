@@ -13,7 +13,6 @@ public class Request {
     private String method  = "GET";
     private Multimap<String, String> params = LinkedListMultimap.create();
     private Map<String, String> headers = new HashMap<>();
-    private List<Cookie> cookies = new ArrayList<>();
     private String contentType = "text/html; charset=UTF-8";
     private String charset = "UTF-8";
 
@@ -40,21 +39,12 @@ public class Request {
         return this;
     }
 
-    public Request cookie(Cookie cookie) {
-        this.cookies.add(cookie);
-        return this;
-    }
-
     public String header(String key) {
         return this.headers.get(key);
     }
 
     public Map<String, String> headers(){
         return this.headers;
-    }
-
-    public List<Cookie> cookies() {
-        return this.cookies;
     }
 
     public String contentType() {

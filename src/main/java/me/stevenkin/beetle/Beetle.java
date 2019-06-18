@@ -20,16 +20,12 @@ public class Beetle {
 
     private Config config;
 
-    public Beetle() {
+    private Beetle(Config config) {
+        this.config = config;
         this.beetleEngine = new BeetleEngine(config);
         this.parsers = new ArrayList<>();
         this.pipeLines = new ArrayList<>();
         this.startRequests = new ArrayList<>();
-    }
-
-    public Beetle config(Config config){
-        this.config = config;
-        return this;
     }
 
     public Beetle parser(Parser parser){
@@ -48,11 +44,18 @@ public class Beetle {
     }
 
     public Beetle start(){
+        this.beetleEngine.setParsers(parsers);
+        this.beetleEngine.setPipeLines(pipeLines);
+        this.beetleEngine.setStartRequest(startRequests);
         this.beetleEngine.start();
         return this;
     }
 
     public void stop(){
         this.beetleEngine.stop();
+    }
+
+    public static Beetle me(Config config){
+        return new Beetle(config);
     }
 }

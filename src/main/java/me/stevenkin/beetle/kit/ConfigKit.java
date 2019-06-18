@@ -13,7 +13,7 @@ import java.util.Properties;
 public class ConfigKit {
 
     public static Config config(String configFile){
-        URL url = ConfigKit.class.getClassLoader().getResource("extObj.txt");
+        URL url = ConfigKit.class.getClassLoader().getResource(configFile);
         File file = new File(url.getFile());
         if(!file.exists())
             return null;

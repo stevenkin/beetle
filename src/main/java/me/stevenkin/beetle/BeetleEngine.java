@@ -46,6 +46,7 @@ public class BeetleEngine {
     public void start(){
         if(isRunning)
             throw new RuntimeException("already started");
+        log.info("beetle start...");
         isRunning = true;
         this.startRequest.forEach(request -> scheduler.addRequest(request));
 
@@ -74,7 +75,6 @@ public class BeetleEngine {
                 }
             }
         });
-        downloadThread.setDaemon(true);
         downloadThread.setName("download-thread");
         downloadThread.start();
         parse();

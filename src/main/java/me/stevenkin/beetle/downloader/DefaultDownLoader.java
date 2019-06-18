@@ -53,7 +53,7 @@ public class DefaultDownLoader implements DownLoader {
         okhttp3.Request request1;
         okhttp3.Request.Builder builder = new okhttp3.Request.Builder();
         switch (method){
-            case "get":
+            case "GET":
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append(url);
                 stringBuilder.append("?");
@@ -67,7 +67,7 @@ public class DefaultDownLoader implements DownLoader {
                 stringBuilder.deleteCharAt(stringBuilder.length() - 1);
                 builder.url(url);
                 break;
-            case "post":
+            case "POST":
                 builder.url(url);
                 okhttp3.FormBody.Builder builder1 = new okhttp3.FormBody.Builder();
                 params.entries().forEach(e->builder1.add(e.getKey(), e.getValue()));
