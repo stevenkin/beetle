@@ -29,6 +29,7 @@ public class ConfigKit {
         config.setParallelThreads(Integer.parseInt(properties.getProperty("parallelThreads")));
         config.setQueueSize(Integer.parseInt(properties.getProperty("queueSize")));
         config.setTimeout(Integer.parseInt(properties.getProperty("timeout")));
+        config.setReadTimeout(Integer.parseInt(properties.getProperty("readTimeout")));
         config.setUserAgent(properties.getProperty("userAgent"));
         return config;
     }
