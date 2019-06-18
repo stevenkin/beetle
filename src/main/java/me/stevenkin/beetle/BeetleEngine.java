@@ -61,9 +61,11 @@ public class BeetleEngine {
                     continue;
                 }
                 Request request = scheduler.takeRequest();
-                executorService.submit(() ->
-                    scheduler.addResponse(downLoader.download(request))
-                );
+                executorService.submit(() -> {
+                    Response response = downLoader.download(request);
+                    if(response != null)
+                        scheduler.addResponse(response);
+                });
                 try {
                     Thread.sleep(config.getDelay() * 1000);
                 } catch (InterruptedException e) {
